@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Application/">
+    <Project Path="CMS.Application/CMS.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/Domain/">
+    <Project Path="CMS.Domain/CMS.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="CMS.Infrastructure/CMS.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Web/">
+    <Project Path="CMS.Web/CMS.Web.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>
