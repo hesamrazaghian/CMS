@@ -1,3 +1,5 @@
+﻿using CMS.Application;                
+using CMS.Infrastructure;            
 
 namespace CMS.Web
 {
@@ -5,30 +7,52 @@ namespace CMS.Web
     {
         public static void Main(string[] args)
         {
+            #region Builder
             var builder = WebApplication.CreateBuilder(args);
+            #endregion
 
-            // Add services to the container.
+            #region Services // register application & infrastructure services
 
+            // Add controllers (API)
             builder.Services.AddControllers( );
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+            // Register Application Layer (CQRS, Mediator, Mapper, Validation)
+            builder.Services.AddApplication( );
+
+            // Register Infrastructure Layer (DbContext, Auth, Persistence)
+            builder.Services.AddInfrastructure(builder.Configuration);
+
+            // Register OpenAPI / Swagger
             builder.Services.AddOpenApi( );
 
-            var app = builder.Build( );
+            #endregion
 
-            // Configure the HTTP request pipeline.
+            #region Build
+            var app = builder.Build( );
+            #endregion
+
+            #region Middleware // configure HTTP pipeline
+
+            // Enable Swagger UI in development
             if (app.Environment.IsDevelopment( ))
             {
                 app.MapOpenApi( );
             }
 
+            // Redirect HTTP → HTTPS
             app.UseHttpsRedirection( );
 
+            // Authorization middleware
             app.UseAuthorization( );
 
-
+            // Map API controllers
             app.MapControllers( );
 
+            #endregion
+
+            #region Run
             app.Run( );
+            #endregion
         }
     }
 }
