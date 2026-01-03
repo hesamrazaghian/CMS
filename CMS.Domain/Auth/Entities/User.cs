@@ -77,8 +77,8 @@ public class User
 
     #region Navigation Properties
 
-    /// <summary>Roles assigned to this user.</summary>
-    public ICollection<Role> Roles { get; set; } = new List<Role>( );
+    /// <summary>Roles assigned to this user (many-to-many via UserRole).</summary>
+    public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>( );
 
     /// <summary>Refresh tokens issued for this user.</summary>
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>( );

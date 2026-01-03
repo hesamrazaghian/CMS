@@ -40,8 +40,8 @@ public class Role
 
     #region Navigation Properties
 
-    /// <summary>Users assigned to this role.</summary>
-    public ICollection<User> Users { get; set; } = new List<User>( );
+    /// <summary>Users assigned to this role (many-to-many via UserRole).</summary>
+    public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>( );
 
     #endregion
 }

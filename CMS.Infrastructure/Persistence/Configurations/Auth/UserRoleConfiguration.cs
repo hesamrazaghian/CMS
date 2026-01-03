@@ -9,24 +9,15 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     public void Configure(EntityTypeBuilder<UserRole> builder)
     {
         builder.ToTable("UserRoles");
-        builder.HasKey(ur => new { ur.UserId, ur.RoleId }); // Composite key
 
-        // Relationships
+        builder.HasKey(ur => new { ur.UserId, ur.RoleId });
+
         builder.HasOne(ur => ur.User)
-            .WithMany(u => u.Roles)
-            .HasForeignKey(ur => ur.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithMany(u => u.UserRoles)
+            .HasForeignKey(ur => ur.UserId);
 
         builder.HasOne(ur => ur.Role)
-            .WithMany(r => r.Users)
-            .HasForeignKey(ur => ur.RoleId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        // Audit properties
-        builder.Property(ur => ur.AssignedBy)
-            .HasMaxLength(128);
-
-        // Index for active assignments
-        builder.HasIndex(ur => ur.IsActive);
+            .WithMany(r => r.UserRoles)
+            .HasForeignKey(ur => ur.RoleId);
     }
 }

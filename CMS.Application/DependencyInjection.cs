@@ -14,7 +14,7 @@ public static class DependencyInjection
         });
         #endregion
 
-        #region Register AutoMapper with explicit assembly scanning
+        #region Register AutoMapper
         services.AddAutoMapper(Assembly.GetExecutingAssembly( ));
         #endregion
 
