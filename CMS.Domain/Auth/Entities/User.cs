@@ -1,64 +1,87 @@
 ﻿namespace CMS.Domain.Auth.Entities;
 
+/// <summary>
+/// Represents a user account in the system.
+/// </summary>
 public class User
 {
-    // Unique identifier for the user
+    #region Identity
+
+    /// <summary>Unique identifier for the user.</summary>
     public Guid Id { get; set; } = Guid.NewGuid( );
 
-    // Username (e.g., "john_doe")
+    /// <summary>Username for login (e.g., "john_doe").</summary>
     public string Username { get; set; } = string.Empty;
 
-    // Uppercase username for case-insensitive lookups
+    /// <summary>Uppercase username for case-insensitive lookups.</summary>
     public string NormalizedUsername { get; set; } = string.Empty;
 
-    // User's email address
+    #endregion
+
+    #region Contact Info
+
+    /// <summary>User's email address.</summary>
     public string Email { get; set; } = string.Empty;
 
-    // Uppercase email for case-insensitive comparisons
+    /// <summary>Uppercase email for case-insensitive comparisons.</summary>
     public string NormalizedEmail { get; set; } = string.Empty;
 
-    // Hashed password (never store plain text!)
-    public string PasswordHash { get; set; } = string.Empty;
-
-    // Indicates if the email address has been verified
-    public bool EmailConfirmed { get; set; }
-
-    // Optional phone number
+    /// <summary>Optional phone number.</summary>
     public string PhoneNumber { get; set; } = string.Empty;
 
-    // Indicates if the phone number has been verified
+    #endregion
+
+    #region Security
+
+    /// <summary>Hashed password (never store plain text!).</summary>
+    public string PasswordHash { get; set; } = string.Empty;
+
+    /// <summary>Indicates if the email address has been verified.</summary>
+    public bool EmailConfirmed { get; set; }
+
+    /// <summary>Indicates if the phone number has been verified.</summary>
     public bool PhoneNumberConfirmed { get; set; }
 
-    // Enables two-factor authentication for the user
+    /// <summary>Enables two-factor authentication for the user.</summary>
     public bool TwoFactorEnabled { get; set; }
 
-    // Allows account lockout after failed login attempts
+    /// <summary>Allows account lockout after failed login attempts.</summary>
     public bool LockoutEnabled { get; set; }
 
-    // End time of lockout period (if locked)
+    /// <summary>End time of lockout period (if locked).</summary>
     public DateTimeOffset? LockoutEnd { get; set; }
 
-    // Number of consecutive failed access attempts
+    /// <summary>Number of consecutive failed access attempts.</summary>
     public int AccessFailedCount { get; set; }
 
-    // Timestamp when the user was created (UTC)
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    #endregion
 
-    // Optional timestamp of last profile update (UTC)
-    public DateTime? UpdatedAt { get; set; }
+    #region Audit & Lifecycle
 
-    // Timestamp of the user's last successful login (UTC)
-    public DateTime? LastLoginAt { get; set; }
+    /// <summary>Timestamp when the user was created (UTC).</summary>
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
-    // Timestamp of the last password change (UTC)
-    public DateTime? LastPasswordChangeAt { get; set; }
+    /// <summary>Optional timestamp of last profile update (UTC).</summary>
+    public DateTimeOffset? UpdatedAt { get; set; }
 
-    // Indicates if the user account is active
+    /// <summary>Timestamp of the user's last successful login (UTC).</summary>
+    public DateTimeOffset? LastLoginAt { get; set; }
+
+    /// <summary>Timestamp of the last password change (UTC).</summary>
+    public DateTimeOffset? LastPasswordChangeAt { get; set; }
+
+    /// <summary>Indicates if the user account is active.</summary>
     public bool IsActive { get; set; } = true;
 
-    // Roles assigned to this user
+    #endregion
+
+    #region Navigation Properties
+
+    /// <summary>Roles assigned to this user.</summary>
     public ICollection<Role> Roles { get; set; } = new List<Role>( );
 
-    // Refresh tokens issued for this user
+    /// <summary>Refresh tokens issued for this user.</summary>
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>( );
+
+    #endregion
 }

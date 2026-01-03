@@ -1,28 +1,47 @@
 ﻿namespace CMS.Domain.Auth.Entities;
 
+/// <summary>
+/// Represents a role that can be assigned to users for authorization.
+/// </summary>
 public class Role
 {
-    // Unique identifier for the role
+    #region Identity
+
+    /// <summary>Unique identifier for the role.</summary>
     public Guid Id { get; set; } = Guid.NewGuid( );
 
-    // Display name of the role
+    /// <summary>Display name of the role (e.g., "Admin", "Editor").</summary>
     public string Name { get; set; } = string.Empty;
 
-    // Uppercase version for case-insensitive lookups
+    /// <summary>Uppercase version for case-insensitive lookups.</summary>
     public string NormalizedName { get; set; } = string.Empty;
 
-    // Description for the admin panel
+    #endregion
+
+    #region Metadata
+
+    /// <summary>Description for the admin panel or audit purposes.</summary>
     public string Description { get; set; } = string.Empty;
 
-    // Indicates if the role is a non-deletable system role (e.g., Admin)
+    /// <summary>Indicates if the role is a non-deletable system role (e.g., Admin).</summary>
     public bool IsSystemRole { get; set; } = false;
 
-    // Creation timestamp in UTC
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    #endregion
 
-    // Optional last update timestamp in UTC
-    public DateTime? UpdatedAt { get; set; }
+    #region Audit
 
-    // Users assigned to this role
-    public ICollection<User> Users { get; set; } = default!;
+    /// <summary>Creation timestamp in UTC.</summary>
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+
+    /// <summary>Optional last update timestamp in UTC.</summary>
+    public DateTimeOffset? UpdatedAt { get; set; }
+
+    #endregion
+
+    #region Navigation Properties
+
+    /// <summary>Users assigned to this role.</summary>
+    public ICollection<User> Users { get; set; } = new List<User>( );
+
+    #endregion
 }

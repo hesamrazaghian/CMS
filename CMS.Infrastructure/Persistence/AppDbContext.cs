@@ -2,43 +2,55 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace CMS.Infrastructure.Persistence
+namespace CMS.Infrastructure.Persistence;
+
+/// <summary>
+/// Main database context for the CMS application.
+/// </summary>
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    #region Constructors
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="AppDbContext"/> with the specified options.
+    /// </summary>
+    /// <param name="options">The options for this context.</param>
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
     {
-        // Constructor injecting DbContextOptions
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
-
-        #region DbSets // EF Core entity sets
-
-        // Users table
-        public DbSet<User> Users => Set<User>( );
-
-        // Roles table
-        public DbSet<Role> Roles => Set<Role>( );
-
-        // Refresh tokens table
-        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>( );
-
-        #endregion
-
-        #region ModelConfig // apply all IEntityTypeConfiguration classes
-
-        // Configure EF Core model mappings
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Base configuration
-            base.OnModelCreating(modelBuilder);
-
-            // Apply all configuration classes in current assembly
-            modelBuilder.ApplyConfigurationsFromAssembly(
-                Assembly.GetExecutingAssembly( )
-            );
-        }
-
-        #endregion
     }
+
+    #endregion
+
+    #region DbSets
+
+    /// <summary>Users table.</summary>
+    public DbSet<User> Users => Set<User>( );
+
+    /// <summary>Roles table.</summary>
+    public DbSet<Role> Roles => Set<Role>( );
+
+    /// <summary>User-role assignments with audit metadata.</summary>
+    public DbSet<UserRole> UserRoles => Set<UserRole>( );
+
+    /// <summary>Refresh tokens for secure authentication flows.</summary>
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>( );
+
+    #endregion
+
+    #region Model Configuration
+
+    /// <summary>
+    /// Configures the model by applying entity configurations from the current assembly.
+    /// </summary>
+    /// <param name="modelBuilder">The builder being used to construct the model.</param>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Apply all IEntityTypeConfiguration classes in this assembly
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly( ));
+    }
+
+    #endregion
 }
