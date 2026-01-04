@@ -6,6 +6,9 @@ namespace CMS.Infrastructure.Persistence.Configurations.Auth;
 
 public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
 {
+    #region Configuration
+
+    // Configures the many-to-many relationship between users and roles.
     public void Configure(EntityTypeBuilder<UserRole> builder)
     {
         builder.ToTable("UserRoles");
@@ -20,4 +23,6 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
             .WithMany(r => r.UserRoles)
             .HasForeignKey(ur => ur.RoleId);
     }
+
+    #endregion
 }

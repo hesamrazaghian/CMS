@@ -5,16 +5,13 @@ using System.Reflection;
 namespace CMS.Infrastructure.Persistence;
 
 /// <summary>
-/// Main database context for the CMS application.
+/// Represents the main EF Core database context for the CMS.
 /// </summary>
 public class AppDbContext : DbContext
 {
-    #region Constructors
+    #region Constructor
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="AppDbContext"/> with the specified options.
-    /// </summary>
-    /// <param name="options">The options for this context.</param>
+    // Initializes the database context with injected options.
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
@@ -24,31 +21,24 @@ public class AppDbContext : DbContext
 
     #region DbSets
 
-    /// <summary>Users table.</summary>
+    // Represents the users table.
     public DbSet<User> Users => Set<User>( );
-
-    /// <summary>Roles table.</summary>
+    // Represents the roles table.
     public DbSet<Role> Roles => Set<Role>( );
-
-    /// <summary>User-role assignments with audit metadata.</summary>
+    // Represents the junction table between users and roles.
     public DbSet<UserRole> UserRoles => Set<UserRole>( );
-
-    /// <summary>Refresh tokens for secure authentication flows.</summary>
+    // Represents refresh tokens used for authentication.
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>( );
 
     #endregion
 
     #region Model Configuration
 
-    /// <summary>
-    /// Configures the model by applying entity configurations from the current assembly.
-    /// </summary>
-    /// <param name="modelBuilder">The builder being used to construct the model.</param>
+    // Applies all entity configurations from the current assembly.
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // Apply all IEntityTypeConfiguration classes in this assembly
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly( ));
     }
 

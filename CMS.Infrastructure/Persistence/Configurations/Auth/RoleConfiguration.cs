@@ -6,9 +6,13 @@ namespace CMS.Infrastructure.Persistence.Configurations.Auth;
 
 public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
+    #region Configuration
+
+    // Configures the Role entity mapping and constraints.
     public void Configure(EntityTypeBuilder<Role> builder)
     {
         builder.ToTable("Roles");
+
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Name)
@@ -19,8 +23,6 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
             .IsRequired( )
             .HasMaxLength(64);
 
-        builder.HasIndex(r => r.NormalizedName).IsUnique( );
-
         builder.Property(r => r.Description)
             .HasMaxLength(256);
 
@@ -30,5 +32,9 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.Property(r => r.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+        builder.HasIndex(r => r.NormalizedName)
+            .IsUnique( );
     }
+
+    #endregion
 }
