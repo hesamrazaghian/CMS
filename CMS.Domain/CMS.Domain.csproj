@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Entities\" />
-    <Folder Include="Pages\Entities\" />
-    <Folder Include="Products\Entities\" />
+    <Folder Include="Auth\Entities\" />
   </ItemGroup>
 
 </Project>
