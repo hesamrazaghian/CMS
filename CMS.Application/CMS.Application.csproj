@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Auth\Entities\" />
     <Folder Include="Common\Entities\" />
     <Folder Include="Pages\Entities\" />
     <Folder Include="Products\Entities\" />

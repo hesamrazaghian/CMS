@@ -21,7 +21,7 @@ public static class DependencyInjection
         // Repositories
         #region Register Repositories
         services.AddScoped<IUserRepository, UserRepository>( );
-        services.AddScoped<IRoleRepository, RoleRepository>( ); // اگر ساختی
+        services.AddScoped<IRoleRepository, RoleRepository>( );
         #endregion
 
         return services;
