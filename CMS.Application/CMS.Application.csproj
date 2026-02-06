@@ -17,4 +17,9 @@
     <ProjectReference Include="..\CMS.Domain\CMS.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Auth\DTOs\" />
+    <Folder Include="Auth\Queries\" />
+  </ItemGroup>
+
 </Project>

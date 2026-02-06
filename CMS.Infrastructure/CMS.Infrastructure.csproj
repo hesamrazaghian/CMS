@@ -29,4 +29,8 @@
     <ProjectReference Include="..\CMS.Domain\CMS.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+
 </Project>

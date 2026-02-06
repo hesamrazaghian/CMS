@@ -1,5 +1,4 @@
-﻿using CMS.Application;                
-using CMS.Infrastructure;            
+﻿
 
 namespace CMS.Web
 {
@@ -16,11 +15,11 @@ namespace CMS.Web
             // Add controllers (API)
             builder.Services.AddControllers( );
 
-            // Register Application Layer (CQRS, Mediator, Mapper, Validation)
-            builder.Services.AddApplication( );
+            //// Register Application Layer (CQRS, Mediator, Mapper, Validation)
+            //builder.Services.AddApplication( );
 
-            // Register Infrastructure Layer (DbContext, Auth, Persistence)
-            builder.Services.AddInfrastructure(builder.Configuration);
+            //// Register Infrastructure Layer (DbContext, Auth, Persistence)
+            //builder.Services.AddInfrastructure(builder.Configuration);
 
             // Register OpenAPI / Swagger
             builder.Services.AddOpenApi( );
