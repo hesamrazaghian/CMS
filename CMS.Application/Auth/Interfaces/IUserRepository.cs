@@ -1,7 +1,9 @@
 ﻿using CMS.Domain.Auth.Entities;
 
+namespace CMS.Application.Auth.Interfaces;
+
 public interface IUserRepository
 {
-    Task AddAsync( User user );
-    Task<User?> GetByEmailAsync( string email );
+    Task AddAsync( User user, CancellationToken cancellationToken = default );
+    Task<User?> GetByEmailAsync( string email, CancellationToken cancellationToken = default );
 }

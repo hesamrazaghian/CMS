@@ -7,61 +7,47 @@ namespace CMS.Domain.Auth.Entities
     {
         #region Identity
 
-        // Unique identifier of the user entity
-        public Guid Id { get; private set; }
+        public Guid Id { get; init; }
 
         #endregion
 
         #region Credentials
 
-        // Username used for authentication
-        public string Username { get; private set; }
-
-        // Email address used for identification and communication
-        public string Email { get; private set; }
-
-        // Hashed password stored for authentication
-        public string PasswordHash { get; private set; }
+        public required string Username { get; set; }
+        public required string Email { get; set; }
+        public required string PasswordHash { get; set; }
 
         #endregion
 
         #region Account Status
 
-        // Current status of the user account
-        public UserStatus Status { get; private set; }
+        public UserStatus Status { get; private set; } = UserStatus.Active;
 
-        // Indicates whether the user's email has been confirmed
         public bool IsEmailConfirmed { get; private set; }
 
         #endregion
 
         #region Audit
 
-        // Date and time when the user account was created
-        public DateTime CreatedAt { get; private set; }
+        public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 
-        // Date and time of the user's last successful login
-        public DateTime? LastLoginAt { get; private set; }
-
-        #endregion
-
-        #region EF Core
-
-        // Parameterless constructor required by Entity Framework Core
-        protected User( ) { }
+        public DateTime? LastLoginAt { get; set; }
 
         #endregion
 
         #region Constructors
 
-        // Creates a new active user with required authentication data
+        public User( )
+        {
+            Status = UserStatus.Active;
+        }
+
         public User( string username, string email, string passwordHash )
         {
             Id = Guid.NewGuid( );
             Username = username;
             Email = email;
             PasswordHash = passwordHash;
-
             Status = UserStatus.Active;
             CreatedAt = DateTime.UtcNow;
         }
@@ -70,19 +56,16 @@ namespace CMS.Domain.Auth.Entities
 
         #region Domain Behaviors
 
-        // Marks the user's email as confirmed
         public void ConfirmEmail( )
         {
             IsEmailConfirmed = true;
         }
 
-        // Records the time of a successful login
         public void RecordLogin( )
         {
             LastLoginAt = DateTime.UtcNow;
         }
 
-        // Deactivates the user account
         public void Deactivate( )
         {
             Status = UserStatus.Inactive;

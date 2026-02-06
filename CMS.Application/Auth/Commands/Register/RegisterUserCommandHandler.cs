@@ -1,8 +1,11 @@
-﻿using CMS.Domain.Auth.Entities;
+﻿using CMS.Application.Auth.Commands.Register;
+using CMS.Application.Auth.Interfaces;
+using CMS.Domain.Auth.Entities;
 using MediatR;
 
-public class RegisterUserCommandHandler
-    : IRequestHandler<RegisterUserCommand, Guid>
+namespace CMS.Application.Auth.Commands.Register;
+
+public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
 {
     private readonly IUserRepository _userRepository;
 
@@ -11,18 +14,20 @@ public class RegisterUserCommandHandler
         _userRepository = userRepository;
     }
 
-    public async Task<Guid> Handle(
-        RegisterUserCommand request,
-        CancellationToken cancellationToken )
+    public async Task<Guid> Handle( RegisterUserCommand request, CancellationToken cancellationToken )
     {
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-        var user = new User(
-            request.Username,
-            request.Email,
-            passwordHash);
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Username = request.Username,
+            Email = request.Email,
+            PasswordHash = passwordHash,
+            CreatedAt = DateTime.UtcNow
+        };
 
-        await _userRepository.AddAsync( user );
+        await _userRepository.AddAsync( user, cancellationToken );
 
         return user.Id;
     }
